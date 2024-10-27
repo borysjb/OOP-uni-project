@@ -1,4 +1,4 @@
-package agh.ics.oop.model;
-
-public class Vector2dTest {
+import static org.junit.jupiter.api.Assertions.*;
+class Vector2dTest {
+  
 }
