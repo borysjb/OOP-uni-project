@@ -6,7 +6,6 @@ import agh.ics.oop.model.Vector2d;
 import java.util.List;
 
 public class World {
-
     public static void main (String[] args) {
         Animal test = new Animal(new Vector2d(1,2));
         System.out.println(test.getPosition());
