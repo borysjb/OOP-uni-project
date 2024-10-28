@@ -1,36 +1,19 @@
 package agh.ics.oop;
-import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.Vector2d;
 
 public class World {
-
-    /* run ver1 (zadania 8-10)
-    static void run() {
-        System.out.println("zwierzak idzie do przodu");
-    }*/
-    /* run ver 2 (zadania 11-13)
-    static void run(String[] moves) {
-        System.out.println("zwierzak idzie do przodu");
-        for (String move : moves) {
-            System.out.println(move);
-        }
-    }*/
-    static void run(MoveDirection[] moves) {
-        for (MoveDirection move : moves) {
-            String message = switch (move) {
-                case FORWARD -> "zwierzak idzie do przodu";
-                case BACKWARD -> "zwierzak idzie do tyłu";
-                case LEFT -> "zwierzak skręca w lewo";
-                case RIGHT -> "zwierzak skręca w prawo";
-                default -> "nieznana komenda";
-            };
-
-            System.out.println(message);
-        }
-    }
     public static void main (String[] args) {
-        System.out.println("system wystartował");
-        MoveDirection[] moves = OptionsParser.Parse(args);
-        run(moves);
-        System.out.println("system zakończył działanie");
+        Vector2d position1 = new Vector2d(1, 2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2, -1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
+
+        MapDirection testdir = MapDirection.NORTH;
+        System.out.println(testdir);
+        testdir = testdir.prev();
+        System.out.println(testdir);
+        System.out.println(testdir.toUnitVector());
     }
 }
