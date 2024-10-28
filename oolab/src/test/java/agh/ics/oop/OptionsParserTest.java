@@ -8,36 +8,39 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsParserTest {
     @Test
     void forwardParsesCorrectly () {
-        String[] toparse = new String[1];
-        toparse[0] = "f";
-        MoveDirection[] expected = new MoveDirection[1];
-        expected[0] = MoveDirection.FORWARD;
+        String[] toparse = {"f"};
+        MoveDirection[] expected = {MoveDirection.FORWARD};
         assertArrayEquals(expected, OptionsParser.Parse(toparse));
     }
 
     @Test
     void backwardParsesCorrectly () {
-        String[] toparse = new String[1];
-        toparse[0] = "b";
-        MoveDirection[] expected = new MoveDirection[1];
-        expected[0] = MoveDirection.BACKWARD;
+        String[] toparse = {"b"};
+        MoveDirection[] expected = {MoveDirection.BACKWARD};
         assertArrayEquals(expected, OptionsParser.Parse(toparse));
     }
 
     @Test
     void leftParsesCorrectly () {
-        String[] toparse = new String[1];
-        toparse[0] = "l";
-        MoveDirection[] expected = new MoveDirection[1];
-        expected[0] = MoveDirection.LEFT;
+        String[] toparse = {"l"};
+        MoveDirection[] expected = {MoveDirection.LEFT};
         assertArrayEquals(expected, OptionsParser.Parse(toparse));
     }
 
     @Test
     void rightParsesCorrectly () {
-        String[] toparse = new String[1];
-        toparse[0] = "r";
-        MoveDirection[] expected = new MoveDirection[1];
-        expected[0] = MoveDirection.RIGHT;
+        String[] toparse = {"r"};
+        MoveDirection[] expected = {MoveDirection.RIGHT};
+        assertArrayEquals(expected, OptionsParser.Parse(toparse));
+    }
+
+    @Test
+    void multipleParseCorrectly() {
+        String[] toparse = {"f","f","r","b"};
+        MoveDirection[] expected = {MoveDirection.FORWARD,
+                MoveDirection.FORWARD,
+                MoveDirection.RIGHT,
+                MoveDirection.BACKWARD};
+        assertArrayEquals(expected, OptionsParser.Parse(toparse));
     }
 }
