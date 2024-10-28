@@ -30,6 +30,12 @@ class Vector2dTest {
     }
 
     @Test
+    void vectorIsEqualToItself() {
+        Vector2d v1 = new Vector2d(1,2);
+        assertTrue(v1.equals(v1));
+    }
+
+    @Test
     void toStringGivesString() {
         Vector2d v1 = new Vector2d(1,2);
 
