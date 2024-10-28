@@ -11,7 +11,6 @@ public class OptionsParser {
                 case "b" -> data[i] = MoveDirection.BACKWARD;
                 case "l" -> data[i] = MoveDirection.LEFT;
                 case "r" -> data[i] = MoveDirection.RIGHT;
-                default -> data[i] = null;
             }
         }
         return data;

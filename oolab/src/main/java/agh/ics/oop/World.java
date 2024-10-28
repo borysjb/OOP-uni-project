@@ -3,7 +3,6 @@ import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.Vector2d;
 
 public class World {
-
     public static void main (String[] args) {
         Vector2d position1 = new Vector2d(1, 2);
         System.out.println(position1);
