@@ -24,7 +24,7 @@ class Vector2dTest {
     @Test
     void nonVectorsAreNotEqual() {
         Vector2d v1 = new Vector2d(1,2);
-        Object v2 = new Vector2d(2,2);
+        int[] v2 = {1,2};
 
         assertFalse(v1.equals(v2));
     }
