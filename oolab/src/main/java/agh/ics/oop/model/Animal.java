@@ -5,6 +5,10 @@ public class Animal {
     private MapDirection direction;
 
     public Animal(Vector2d position) {
+        if (position.getX()>4) position = new Vector2d(4, position.getY());
+        if (position.getX()<0) position = new Vector2d(0, position.getY());
+        if (position.getY()>4) position = new Vector2d(position.getX(), 4);
+        if (position.getY()<0) position = new Vector2d(position.getX(), 0);
         this.position = position;
         this.direction = MapDirection.NORTH;
     }
@@ -24,7 +28,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "pos: " + position.toString() + " direction: "+ direction.toString();
+        return "( " + position.toString() + " , "+ direction.toString() + " )";
     }
 
     public boolean isAt (Vector2d position) {
@@ -38,13 +42,9 @@ public class Animal {
             case LEFT -> this.direction = this.direction.prev();
             case RIGHT -> this.direction = this.direction.next();
         }
-        switch (this.position.getX()) {
-            case -1 -> this.position = this.position.add(new Vector2d(1,0));
-            case 5 -> this.position = this.position.add(new Vector2d(-1,0));
-        }
-        switch (this.position.getY()) {
-            case -1 -> this.position = this.position.add(new Vector2d(0,1));
-            case 5 -> this.position = this.position.add(new Vector2d(0,-1));
-        }
+        if (this.position.getX()>4) this.position = new Vector2d(4, this.position.getY());
+        if (this.position.getX()<0) this.position = new Vector2d(0, this.position.getY());
+        if (this.position.getY()>4) this.position = new Vector2d(this.position.getX(), 4);
+        if (this.position.getY()<0) this.position = new Vector2d(this.position.getX(), 0);
     }
 }
