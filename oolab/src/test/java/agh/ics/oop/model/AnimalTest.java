@@ -28,9 +28,15 @@ class AnimalTest {
     }
 
     @Test
-    void testIsAt() {
+    void testIsAtTrue() {
         Animal animal = new Animal(new Vector2d(3,1));
         assertTrue(animal.isAt(new Vector2d(3,1)));
+    }
+
+    @Test
+    void testIsAtFalse() {
+        Animal animal = new Animal(new Vector2d(3,1));
+        assertFalse(animal.isAt(new Vector2d(2,1)));
     }
 
     @Test
