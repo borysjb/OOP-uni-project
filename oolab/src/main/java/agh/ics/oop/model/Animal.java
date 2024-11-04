@@ -3,6 +3,8 @@ package agh.ics.oop.model;
 public class Animal {
     private Vector2d position;
     private MapDirection direction;
+    private static final Vector2d lowerbound = new Vector2d(0, 0);
+    private static final Vector2d upperbound = new Vector2d(4, 4);
 
     public Animal(Vector2d position) {
         if (position.getX()>4) position = new Vector2d(4, position.getY());
@@ -37,14 +39,20 @@ public class Animal {
 
     public void move (MoveDirection direction) {
         switch (direction) {
-            case FORWARD -> this.position = this.position.add(this.direction.toUnitVector());
-            case BACKWARD -> this.position = this.position.subtract(this.direction.toUnitVector());
+            case FORWARD -> {
+                Vector2d newpos = this.position.add(this.direction.toUnitVector());
+                if(newpos.follows(lowerbound) && newpos.precedes(upperbound)) {
+                    this.position = newpos;
+                }
+            }
+            case BACKWARD -> {
+                Vector2d newpos = this.position.subtract(this.direction.toUnitVector());
+                if(newpos.follows(lowerbound) && newpos.precedes(upperbound)) {
+                    this.position = newpos;
+                }
+            }
             case LEFT -> this.direction = this.direction.prev();
             case RIGHT -> this.direction = this.direction.next();
         }
-        if (this.position.getX()>4) this.position = new Vector2d(4, this.position.getY());
-        if (this.position.getX()<0) this.position = new Vector2d(0, this.position.getY());
-        if (this.position.getY()>4) this.position = new Vector2d(this.position.getX(), 4);
-        if (this.position.getY()<0) this.position = new Vector2d(this.position.getX(), 0);
     }
 }

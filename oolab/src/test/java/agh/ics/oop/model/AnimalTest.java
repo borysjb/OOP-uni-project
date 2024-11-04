@@ -24,7 +24,7 @@ class AnimalTest {
     @Test
     void testToString() {
         Animal animal = new Animal(new Vector2d(3,1));
-        assertEquals("pos: (3,1) direction: Północ", animal.toString());
+        assertEquals("( (3,1) , Północ )", animal.toString());
     }
 
     @Test
