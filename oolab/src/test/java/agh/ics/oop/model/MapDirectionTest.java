@@ -34,10 +34,10 @@ class MapDirectionTest {
         MapDirection testS = MapDirection.SOUTH;
         MapDirection testW = MapDirection.WEST;
         MapDirection testE = MapDirection.EAST;
-        assertEquals("Północ", testN.toString());
-        assertEquals("Południe", testS.toString());
-        assertEquals("Zachód", testW.toString());
-        assertEquals("Wschód", testE.toString());
+        assertEquals("^", testN.toString());
+        assertEquals("v", testS.toString());
+        assertEquals("<", testW.toString());
+        assertEquals(">", testE.toString());
     }
 
     @Test

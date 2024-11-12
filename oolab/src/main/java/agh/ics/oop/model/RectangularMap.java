@@ -6,13 +6,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap implements WorldMap {
-    Map<Vector2d, Animal> animals = new HashMap<>();
+    private Map<Vector2d, Animal> animals = new HashMap<>();
     private final int width;
     private final int height;
 
     public RectangularMap(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Map<Vector2d, Animal> getAnimals() {
+        return animals;
     }
 
     @Override
@@ -23,12 +35,15 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !animals.containsKey(position);
+        if (animals.containsKey(position)) {
+            return false;
+        }
+        return position.follows(new Vector2d(0, 0)) && position.precedes(new Vector2d(width, height));
     }
 
     @Override
     public boolean place(Animal animal) {
-        if(isOccupied(animal.getPosition())) {
+        if(!canMoveTo(animal.getPosition())) {
             return false;
         } else {
             animals.put(animal.getPosition(), animal);
@@ -38,12 +53,9 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        Animal currentAnimal = animal;
-        animal.move(direction);
-        if ( canMoveTo(animal.getPosition()) ) {
-            animals.remove(currentAnimal.getPosition());
-            animals.put(animal.getPosition(), animal);
-        }
+        animals.remove(animal.getPosition(), animal);
+        animal.move(direction, this);
+        animals.put(animal.getPosition(), animal);
     }
 
     @Override
