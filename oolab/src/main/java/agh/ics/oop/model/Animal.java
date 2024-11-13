@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-public class Animal {
+public class Animal implements WorldElement {
     private Vector2d position;
     private MapDirection direction;
     private static final Vector2d lowerbound = new Vector2d(-1000000000, -1000000000);

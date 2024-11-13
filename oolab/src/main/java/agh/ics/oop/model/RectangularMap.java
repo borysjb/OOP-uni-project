@@ -53,9 +53,9 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        animals.remove(animal.getPosition(), animal);
+        this.animals.remove(animal.getPosition());
         animal.move(direction, this);
-        animals.put(animal.getPosition(), animal);
+        this.animals.put(animal.getPosition(), animal);
     }
 
     @Override

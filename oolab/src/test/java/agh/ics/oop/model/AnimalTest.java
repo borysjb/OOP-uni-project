@@ -44,7 +44,7 @@ class AnimalTest implements MoveValidator {
 
 
     @Test
-    void move() {
+    void moveValid() {
         Animal animal = new Animal(new Vector2d(5,5));
 
         //right turn
