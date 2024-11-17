@@ -19,8 +19,11 @@ public class Simulation {
         this.moves = moves;
         this.world = world;
         for (Vector2d i : positions) {
-            if (this.world.place(new Animal(i))) {
+            try {
+                world.place(new Animal(i));
                 this.animals.add(new Animal(i));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
 
         }

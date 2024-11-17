@@ -1,6 +1,9 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
+
 import java.util.Map;
+import java.util.Observable;
 
 public class RectangularMap extends AbstractWorldMap {
     private final int width;
@@ -24,8 +27,8 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     @Override
-    public String toString() {
-        return super.drawMap(new Vector2d(0,0), new Vector2d(width,height));
+    public Boundary getCurrentBounds() {
+         return new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
     }
 
     @Override

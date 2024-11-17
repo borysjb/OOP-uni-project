@@ -54,13 +54,17 @@ class OptionsParserTest {
                 MoveDirection.FORWARD,
                 MoveDirection.RIGHT,
                 MoveDirection.BACKWARD);
-        assertEquals(expected, OptionsParser.Parse(toparse));
+        assertThrows(IllegalArgumentException.class, () -> {
+            OptionsParser.Parse(toparse);
+        });
     }
 
     @Test
     void errorsOnlyParseCorrectly() {
         String[] toparse = {"x","x","x"};
         List<MoveDirection> expected = List.of();
-        assertEquals(expected, OptionsParser.Parse(toparse));
+        assertThrows(IllegalArgumentException.class, () -> {
+            OptionsParser.Parse(toparse);
+        });
     }
 }

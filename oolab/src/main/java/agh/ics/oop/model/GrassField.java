@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,6 +32,21 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
+    public Boundary getCurrentBounds() {
+        Vector2d lowerbound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d upperbound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        for (Map.Entry<Vector2d, Animal> i : super.animalMap.entrySet()) {
+            upperbound = upperbound.upperRight(i.getKey());
+            lowerbound = lowerbound.lowerLeft(i.getKey());
+        }
+        for (Map.Entry<Vector2d, Grass> i : this.grassMap.entrySet()) {
+            upperbound = upperbound.upperRight(i.getKey());
+            lowerbound = lowerbound.lowerLeft(i.getKey());
+        }
+        return new Boundary(lowerbound, upperbound);
+    }
+
+    @Override
     public boolean isOccupied(Vector2d position) {
         return super.isOccupied(position) || this.grassMap.containsKey(position);
     }
@@ -41,20 +58,5 @@ public class GrassField extends AbstractWorldMap {
         } else {
             return super.objectAt(position);
         }
-    }
-
-    @Override
-    public String toString() {
-        Vector2d lowerbound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        Vector2d upperbound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        for (Map.Entry<Vector2d, Animal> i : super.animalMap.entrySet()) {
-            upperbound = upperbound.upperRight(i.getKey());
-            lowerbound = lowerbound.lowerLeft(i.getKey());
-        }
-        for (Map.Entry<Vector2d, Grass> i : this.grassMap.entrySet()) {
-            upperbound = upperbound.upperRight(i.getKey());
-            lowerbound = lowerbound.lowerLeft(i.getKey());
-        }
-        return super.drawMap(lowerbound, upperbound);
     }
 }
