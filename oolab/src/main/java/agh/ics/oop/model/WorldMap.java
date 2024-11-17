@@ -9,7 +9,7 @@ import agh.ics.oop.model.Vector2d;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap extends MoveValidator, WorldElement {
+public interface WorldMap extends MoveValidator{
 
     /**
      * Place a animal on the map.
@@ -34,6 +34,8 @@ public interface WorldMap extends MoveValidator, WorldElement {
      * @return True if the position is occupied.
      */
     boolean isOccupied(Vector2d position);
+
+    String toString ();
 
     /**
      * Return an animal at a given position.

@@ -10,19 +10,19 @@ import java.util.List;
 import java.util.Vector;
 
 public class Simulation {
-    private List<MoveDirection> moves;
-    private List<Animal> animals;
-    private WorldMap world;
+    private final List<MoveDirection> moves;
+    private final List<Animal> animals;
+    private final WorldMap world;
 
     public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap world) {
         this.animals = new ArrayList<>();
-        for (Vector2d i:positions) {
-            this.animals.add(new Animal(i));
-        }
         this.moves = moves;
         this.world = world;
-        for (Animal a:animals) {
-            this.world.place(a);
+        for (Vector2d i : positions) {
+            if (this.world.place(new Animal(i))) {
+                this.animals.add(new Animal(i));
+            }
+
         }
     }
 

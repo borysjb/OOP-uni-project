@@ -1,16 +1,12 @@
 package agh.ics.oop.model;
 
+import java.util.Objects;
+
 public class Animal implements WorldElement {
     private Vector2d position;
     private MapDirection direction;
-    private static final Vector2d lowerbound = new Vector2d(-1000000000, -1000000000);
-    private static final Vector2d upperbound = new Vector2d(1000000000, 1000000000);
-    //nie chcę ograniczać zwierzaków tutaj, są już ograniczone w RectangularMap
-    //w razie próby "spawnu" zwierzaka poza mapą zostanie on po prostu zignorowany przez RectangularMap
 
     public Animal(Vector2d position) {
-        position = position.lowerLeft(upperbound);
-        position = position.upperRight(lowerbound);
         this.position = position;
         this.direction = MapDirection.NORTH;
     }
@@ -52,5 +48,20 @@ public class Animal implements WorldElement {
                 this.position = newPos;
             }
         }
+    }
+
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (other == null)
+            return false;
+        if (!(other instanceof Animal))
+            return false;
+        Animal that = (Animal) other;
+        return this.position.equals(that.getPosition()) && this.direction.equals(that.getDirection());
+    }
+
+    public int hashCode() {
+        return Objects.hash(this.position, this.direction);
     }
 }
