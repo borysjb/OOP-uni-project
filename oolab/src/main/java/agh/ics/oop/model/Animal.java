@@ -50,6 +50,7 @@ public class Animal implements WorldElement {
         }
     }
 
+    @Override
     public boolean equals(Object other) {
         if (this == other)
             return true;
@@ -61,6 +62,7 @@ public class Animal implements WorldElement {
         return this.position.equals(that.getPosition()) && this.direction.equals(that.getDirection());
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(this.position, this.direction);
     }

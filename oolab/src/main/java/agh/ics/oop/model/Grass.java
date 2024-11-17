@@ -13,6 +13,7 @@ public class Grass implements WorldElement {
         return position;
     }
 
+    @Override
     public String toString() {
         return "*";
     }
@@ -21,7 +22,7 @@ public class Grass implements WorldElement {
         return this.position.equals(position);
     }
 
-
+    @Override
     public boolean equals (Object other) {
         if (this == other)
             return true;
@@ -33,6 +34,7 @@ public class Grass implements WorldElement {
         return this.position.equals(that.getPosition());
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(this.position);
     }
