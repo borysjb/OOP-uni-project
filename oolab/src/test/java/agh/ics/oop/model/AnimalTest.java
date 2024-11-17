@@ -3,121 +3,69 @@ package agh.ics.oop.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+class AnimalTest implements MoveValidator {
 
-class AnimalTest {
-    @Test
-    void testBlankConstructor() {
-        Animal animal = new Animal();
-        assertNotNull(animal);
-        assertEquals(new Vector2d(2,2), animal.getPosition());
-        assertEquals(MapDirection.NORTH, animal.getDirection());
-    }
-
-    @Test
-    void testVectorConstructor() {
-        Animal animal = new Animal(new Vector2d(3,1));
-        assertNotNull(animal);
-        assertEquals(new Vector2d(3,1), animal.getPosition());
-        assertEquals(MapDirection.NORTH, animal.getDirection());
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+        return true;
+        // na potrzeby testów zakładamy brak ograniczeń mapy
     }
 
     @Test
     void testToString() {
-        Animal animal = new Animal(new Vector2d(3,1));
-        assertEquals("( (3,1) , Północ )", animal.toString());
-    }
-
-    @Test
-    void testIsAtTrue() {
-        Animal animal = new Animal(new Vector2d(3,1));
-        assertTrue(animal.isAt(new Vector2d(3,1)));
-    }
-
-    @Test
-    void testIsAtFalse() {
-        Animal animal = new Animal(new Vector2d(3,1));
-        assertFalse(animal.isAt(new Vector2d(2,1)));
-    }
-
-    @Test
-    void testVectorConstructorXHigh() {
-        Animal animal = new Animal(new Vector2d(6,2));
-        assertTrue(animal.isAt(new Vector2d(4,2)));
-    }
-
-    @Test
-    void testVectorConstructorYHigh() {
-        Animal animal = new Animal(new Vector2d(2,6));
-        assertTrue(animal.isAt(new Vector2d(2,4)));
-    }
-
-    @Test
-    void testVectorConstructorXLow() {
-        Animal animal = new Animal(new Vector2d(-6,2));
-        assertTrue(animal.isAt(new Vector2d(0,2)));
-    }
-
-    @Test
-    void testVectorConstructorYLow() {
-        Animal animal = new Animal(new Vector2d(2,-6));
-        assertTrue(animal.isAt(new Vector2d(2,0)));
-    }
-
-    @Test
-    void testMoveForward() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.FORWARD);
-        assertTrue(animal.isAt(new Vector2d(2,3)));
+        assertEquals("^", animal.toString());
+        animal.move(MoveDirection.RIGHT, this);
+        assertEquals(">", animal.toString());
+        animal.move(MoveDirection.RIGHT, this);
+        assertEquals("v", animal.toString());
+        animal.move(MoveDirection.RIGHT, this);
+        assertEquals("<", animal.toString());
     }
 
     @Test
-    void testMoveBackward() {
+    void defaultConstructor() {
         Animal animal = new Animal();
-        animal.move(MoveDirection.BACKWARD);
-        assertTrue(animal.isAt(new Vector2d(2,1)));
+        assertEquals(new Vector2d(2,2), animal.getPosition());
     }
 
     @Test
-    void testMoveLeft() {
-        Animal animal = new Animal();
-        animal.move(MoveDirection.LEFT);
-        assertEquals(MapDirection.WEST, animal.getDirection());
+    void parameterConstructor() {
+        Animal animal = new Animal(new Vector2d(6,9));
+        assertEquals(new Vector2d(6,9), animal.getPosition());
     }
 
     @Test
-    void testMoveRight() {
-        Animal animal = new Animal();
-        animal.move(MoveDirection.RIGHT);
+    void isAtTest() {
+        Animal animal = new Animal(new Vector2d(6,9));
+        assertTrue(animal.isAt(new Vector2d(6,9)));
+    }
+
+
+
+    @Test
+    void move() {
+        Animal animal = new Animal(new Vector2d(5,5));
+
+        //right turn
+        animal.move(MoveDirection.RIGHT, this);
+        assertTrue(animal.isAt(new Vector2d(5,5)));
         assertEquals(MapDirection.EAST, animal.getDirection());
+
+        //forward
+        animal.move(MoveDirection.FORWARD, this);
+        assertTrue(animal.isAt(new Vector2d(6,5)));
+        assertEquals(MapDirection.EAST, animal.getDirection());
+
+        //left turn
+        animal.move(MoveDirection.LEFT, this);
+        assertTrue(animal.isAt(new Vector2d(6,5)));
+        assertEquals(MapDirection.NORTH, animal.getDirection());
+
+        //backward
+        animal.move(MoveDirection.BACKWARD, this);
+        assertTrue(animal.isAt(new Vector2d(6,4)));
+        assertEquals(MapDirection.NORTH, animal.getDirection());
     }
 
-    @Test
-    void testKickbackXLow () {
-        Animal animal = new Animal(new Vector2d(0,1));
-        animal.move(MoveDirection.LEFT);
-        animal.move(MoveDirection.FORWARD);
-        assertTrue(animal.isAt(new Vector2d(0,1)));
-    }
-
-    @Test
-    void testKickbackXHigh () {
-        Animal animal = new Animal(new Vector2d(4,1));
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.FORWARD);
-        assertTrue(animal.isAt(new Vector2d(4,1)));
-    }
-
-    @Test
-    void testKickbackYLow () {
-        Animal animal = new Animal(new Vector2d(1,0));
-        animal.move(MoveDirection.BACKWARD);
-        assertTrue(animal.isAt(new Vector2d(1,0)));
-    }
-
-    @Test
-    void testKickbackYHigh () {
-        Animal animal = new Animal(new Vector2d(1,4));
-        animal.move(MoveDirection.FORWARD);
-        assertTrue(animal.isAt(new Vector2d(1,4)));
-    }
 }
