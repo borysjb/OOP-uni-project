@@ -19,6 +19,13 @@ public class World {
 
             Simulation simulation = new Simulation(positions, directions, map);
             simulation.run();
+
+            RectangularMap rectMap = new RectangularMap(5,5);
+            display = new ConsoleMapDisplay();
+            rectMap.addObserver(display);
+            simulation = new Simulation(positions, directions, rectMap);
+
+            simulation.run();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
