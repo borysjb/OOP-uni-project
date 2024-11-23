@@ -1,9 +1,10 @@
 package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.MapChangeListener;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.channels.Channel;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -52,11 +53,17 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        if (!super.isOccupied(position)) {
-            return this.grassMap.get(position);
-        } else {
-            return super.objectAt(position);
+    public HashMap<Vector2d, WorldElement> getElements() {
+        HashMap<Vector2d, WorldElement> elements = new HashMap<>();
+        for(Grass g : this.grassMap.values()) {
+            elements.put(g.getPosition(), g);
         }
+        for (Animal a : super.animalMap.values()) {
+            elements.put(a.getPosition(), a);
+        }
+        return elements;
     }
+
+
+
 }
