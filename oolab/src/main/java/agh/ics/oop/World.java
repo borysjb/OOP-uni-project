@@ -1,7 +1,6 @@
 package agh.ics.oop;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.ConsoleMapDisplay;
-import agh.ics.oop.model.util.SimulationEngine;
 
 import java.util.ArrayList;
 import java.util.List;
