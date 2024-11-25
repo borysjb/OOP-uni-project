@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -27,7 +28,11 @@ class GrassFieldTest {
     @Test
     void testPlace() {
         GrassField field = new GrassField(0);
-        field.place(new Animal(new Vector2d(4,4)));
+        try {
+            field.place(new Animal(new Vector2d(4, 4)));
+        } catch (IncorrectPositionException ex) {
+            System.out.println("this shouldn't happen");
+        }
 
         Map<Vector2d, Animal> animals = new HashMap<>();
         animals.put(new Vector2d(4,4), new Animal(new Vector2d(4,4)));
@@ -45,7 +50,11 @@ class GrassFieldTest {
     @Test
     void cantMoveToAnimal() {
         GrassField field = new GrassField(0);
-        field.place(new Animal(new Vector2d(4,4)));
+        try {
+            field.place(new Animal(new Vector2d(4, 4)));
+        } catch (IncorrectPositionException e) {
+            throw new RuntimeException(e);
+        }
 
         assertFalse(field.canMoveTo(new Vector2d(4,4)));
     }
@@ -63,7 +72,11 @@ class GrassFieldTest {
     void moveValid() {
         GrassField field = new GrassField(0);
         Animal animal = new Animal(new Vector2d(4,4));
-        field.place(animal);
+        try {
+            field.place(animal);
+        } catch (IncorrectPositionException e) {
+            throw new RuntimeException(e);
+        }
         field.move(animal, MoveDirection.FORWARD);
 
         assertTrue(field.isOccupied(new Vector2d(4,5)));
@@ -75,9 +88,12 @@ class GrassFieldTest {
         GrassField field = new GrassField(0);
         Animal animal = new Animal(new Vector2d(4,4));
         Animal anotherAnimal = new Animal(new Vector2d(4,5));
-
-        field.place(animal);
-        field.place(anotherAnimal);
+        try {
+            field.place(animal);
+            field.place(anotherAnimal);
+        } catch (IncorrectPositionException e) {
+            throw new RuntimeException(e);
+        }
 
         field.move(animal, MoveDirection.FORWARD);
         assertTrue(field.isOccupied(new Vector2d(4,4)));
@@ -88,7 +104,11 @@ class GrassFieldTest {
     void isOccupiedAnimal() {
         GrassField field = new GrassField(0);
         Animal animal = new Animal(new Vector2d(4,4));
-        field.place(animal);
+        try {
+            field.place(animal);
+        } catch (IncorrectPositionException e) {
+            throw new RuntimeException(e);
+        }
 
         assertTrue(field.isOccupied(new Vector2d(4,4)));
     }
@@ -106,7 +126,11 @@ class GrassFieldTest {
     void objectAtAnimal() {
         GrassField field = new GrassField(0);
         Animal animal = new Animal(new Vector2d(4,4));
-        field.place(animal);
+        try {
+            field.place(animal);
+        } catch (IncorrectPositionException e) {
+            throw new RuntimeException(e);
+        }
 
         assertEquals(animal, field.objectAt(new Vector2d(4,4)));
     }
@@ -127,7 +151,11 @@ class GrassFieldTest {
         Map<Vector2d, Grass> grass = field.getGrassMap();
         Vector2d grasspos = grass.entrySet().iterator().next().getKey();
         Animal animal = new Animal(grasspos);
-        field.place(animal);
+        try {
+            field.place(animal);
+        } catch (IncorrectPositionException e) {
+            throw new RuntimeException(e);
+        }
 
         assertEquals(animal, field.objectAt(grasspos));
     }

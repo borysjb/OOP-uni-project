@@ -1,7 +1,10 @@
 package agh.ics.oop.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.MapChangeListener;
+
+import java.nio.channels.Channel;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -30,21 +33,7 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public boolean isOccupied(Vector2d position) {
-        return super.isOccupied(position) || this.grassMap.containsKey(position);
-    }
-
-    @Override
-    public WorldElement objectAt(Vector2d position) {
-        if (!super.isOccupied(position)) {
-            return this.grassMap.get(position);
-        } else {
-            return super.objectAt(position);
-        }
-    }
-
-    @Override
-    public String toString() {
+    public Boundary getCurrentBounds() {
         Vector2d lowerbound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Vector2d upperbound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
         for (Map.Entry<Vector2d, Animal> i : super.animalMap.entrySet()) {
@@ -55,6 +44,26 @@ public class GrassField extends AbstractWorldMap {
             upperbound = upperbound.upperRight(i.getKey());
             lowerbound = lowerbound.lowerLeft(i.getKey());
         }
-        return super.drawMap(lowerbound, upperbound);
+        return new Boundary(lowerbound, upperbound);
     }
+
+    @Override
+    public boolean isOccupied(Vector2d position) {
+        return super.isOccupied(position) || this.grassMap.containsKey(position);
+    }
+
+    @Override
+    public HashMap<Vector2d, WorldElement> getElements() {
+        HashMap<Vector2d, WorldElement> elements = new HashMap<>();
+        for(Grass g : this.grassMap.values()) {
+            elements.put(g.getPosition(), g);
+        }
+        for (Animal a : super.animalMap.values()) {
+            elements.put(a.getPosition(), a);
+        }
+        return elements;
+    }
+
+
+
 }
