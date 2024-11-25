@@ -5,14 +5,12 @@ import agh.ics.oop.model.util.IncorrectPositionException;
 import agh.ics.oop.model.util.MapChangeListener;
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected Map<Vector2d, Animal> animalMap = new HashMap<>();
     private List<MapChangeListener> listeners = new ArrayList<>();
+    UUID ID = UUID.randomUUID();
 
     public void place(Animal animal) throws IncorrectPositionException {
         if(!canMoveTo(animal.getPosition())) {
@@ -21,6 +19,11 @@ public abstract class AbstractWorldMap implements WorldMap {
             animalMap.put(animal.getPosition(), animal);
             mapChanged("Placed new animal on position " + animal.getPosition());
         }
+    }
+
+    @Override
+    public UUID getID() {
+        return ID;
     }
 
     public void addObserver(MapChangeListener l) {

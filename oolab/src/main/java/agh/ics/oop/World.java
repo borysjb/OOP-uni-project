@@ -1,6 +1,7 @@
 package agh.ics.oop;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.ConsoleMapDisplay;
+import agh.ics.oop.model.util.SimulationEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +14,34 @@ public class World {
             //List<MoveDirection> directions = List.of();
             //List<Vector2d> positions = List.of();
 
-            GrassField map = new GrassField(10);
-            ConsoleMapDisplay display = new ConsoleMapDisplay();
-            map.addObserver(display);
-
-            Simulation simulation = new Simulation(positions, directions, map);
-            simulation.run();
-
+            GrassField grassMap = new GrassField(10);
             RectangularMap rectMap = new RectangularMap(5,5);
-            display = new ConsoleMapDisplay();
-            rectMap.addObserver(display);
-            simulation = new Simulation(positions, directions, rectMap);
 
-            simulation.run();
+            ConsoleMapDisplay display = new ConsoleMapDisplay();
+
+
+            List<Simulation> simulations = new ArrayList<>();
+            simulations.add(new Simulation(positions, directions, grassMap));
+            simulations.add(new Simulation(positions, directions, rectMap));
+
+            grassMap.addObserver(display);
+            rectMap.addObserver(display);
+            SimulationEngine engine = new SimulationEngine(simulations);
+            engine.runAsync();
+
+
+            for(int i = 0; i < 1000; i++) {
+                grassMap = new GrassField(10);
+                simulations.add(new Simulation(positions, directions, grassMap));
+                grassMap.addObserver(display);
+            }
+            engine = new SimulationEngine(simulations);
+            engine.runAsync();
+
+
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
+        System.out.println("System zakończył działanie\n");
     }
 }
