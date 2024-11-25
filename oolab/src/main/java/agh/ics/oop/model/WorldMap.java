@@ -35,11 +35,13 @@ public interface WorldMap extends MoveValidator {
      */
     boolean isOccupied(Vector2d position);
 
+    String toString ();
+
     /**
      * Return an animal at a given position.
      *
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    Animal objectAt(Vector2d position);
+    WorldElement objectAt(Vector2d position);
 }

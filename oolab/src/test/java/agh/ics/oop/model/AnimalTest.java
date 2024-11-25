@@ -36,12 +36,16 @@ class AnimalTest implements MoveValidator {
     }
 
     @Test
-    void isAtTest() {
+    void isAt() {
         Animal animal = new Animal(new Vector2d(6,9));
         assertTrue(animal.isAt(new Vector2d(6,9)));
     }
 
-
+    @Test
+    void isNotAt() {
+        Animal animal = new Animal(new Vector2d(6,9));
+        assertFalse(animal.isAt(new Vector2d(5,9)));
+    }
 
     @Test
     void move() {
@@ -68,4 +72,18 @@ class AnimalTest implements MoveValidator {
         assertEquals(MapDirection.NORTH, animal.getDirection());
     }
 
+    @Test
+    void equalsTest() {
+        Animal animal = new Animal(new Vector2d(5,5));
+        Animal anotherAnimal = new Animal(new Vector2d(5,5));
+        assertEquals(animal, anotherAnimal);
+
+        animal.move(MoveDirection.RIGHT, this);
+        anotherAnimal.move(MoveDirection.RIGHT, this);
+        assertEquals(animal, anotherAnimal);
+
+        animal.move(MoveDirection.FORWARD, this);
+        anotherAnimal.move(MoveDirection.FORWARD, this);
+        assertEquals(animal, anotherAnimal);
+    }
 }
