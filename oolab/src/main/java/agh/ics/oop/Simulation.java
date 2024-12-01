@@ -37,7 +37,7 @@ public class Simulation implements Runnable {
     }
 
     public void run() {
-        System.out.println("Simulation started");
+        //System.out.println("Simulation started");
         if (animals.isEmpty()) {
             System.out.println("No animals found");
             return;

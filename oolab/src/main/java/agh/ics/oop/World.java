@@ -28,19 +28,20 @@ public class World {
             SimulationEngine engine = new SimulationEngine(simulations);
             engine.runAsync();
 
-
-            for(int i = 0; i < 1000; i++) {
+            for(int i = 0; i < 2000; i++) {
                 grassMap = new GrassField(10);
                 simulations.add(new Simulation(positions, directions, grassMap));
                 grassMap.addObserver(display);
             }
             engine = new SimulationEngine(simulations);
-            engine.runAsync();
+            engine.runAsyncInThreadPool(10);
 
 
+
+            engine.awaitSimulationsEnd();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        System.out.println("System zakończył działanie\n");
+        System.out.println("System zakonczyl dzialanie\n");
     }
 }
