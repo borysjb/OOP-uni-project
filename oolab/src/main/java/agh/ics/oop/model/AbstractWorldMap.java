@@ -82,7 +82,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         return elements;
     }
 
-    private void mapChanged(String message) {
+    protected void mapChanged(String message) {
         for(MapChangeListener l : listeners) {
             l.mapChanged(this, message);
         }

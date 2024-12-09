@@ -34,11 +34,12 @@ public class World {
                 grassMap.addObserver(display);
             }
             engine = new SimulationEngine(simulations);
-            engine.runAsyncInThreadPool(10);
 
-
-
+            engine.runAsyncInThreadPool(4);
             engine.awaitSimulationsEnd();
+
+            //engine.runSync();
+            //engine.awaitSimulationsEnd();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

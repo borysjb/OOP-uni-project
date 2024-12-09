@@ -10,17 +10,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
+    final int grassNum;
 
     public GrassField(int n) {
-        int maxval = (int) Math.floor(Math.sqrt(10.0 * n));
+        grassNum = n;
         for (int i = 0; i < n; i++) {
-            int xcoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
-            int ycoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
-            while (this.grassMap.containsKey(new Vector2d(xcoord, ycoord))) {
-                xcoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
-                ycoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
-            }
-            this.grassMap.put(new Vector2d(xcoord,ycoord), new Grass(new Vector2d(xcoord,ycoord)));
+            Vector2d grassPos = genGrass();
+            this.grassMap.put(grassPos, new Grass(grassPos));
         }
     }
 
@@ -65,5 +61,14 @@ public class GrassField extends AbstractWorldMap {
     }
 
 
-
+    public Vector2d genGrass() {
+        int maxval = (int) Math.floor(Math.sqrt(10.0 * grassNum));
+        int xcoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
+        int ycoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
+        while (this.grassMap.containsKey(new Vector2d(xcoord, ycoord))) {
+            xcoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
+            ycoord = ThreadLocalRandom.current().nextInt(0, maxval + 1);
+        }
+        return new Vector2d(xcoord,ycoord);
+    }
 }

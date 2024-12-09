@@ -11,11 +11,15 @@ import java.util.concurrent.*;
 
 public class SimulationEngine {
     final private List<Simulation> simulations;
-    private List<Future<?>> futures;
+    private List<Thread> threads;
+    private ExecutorService executorService;
 
     public SimulationEngine(List<Simulation> simulations) {
         this.simulations = simulations;
-        this.futures = new ArrayList<>();
+        this.threads = new ArrayList<>();
+        for (Simulation simulation : simulations) {
+            threads.add(new Thread(simulation));
+        }
     }
 
     public void runSync() {
@@ -25,39 +29,31 @@ public class SimulationEngine {
     }
 
     public void runAsync() {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-
-        for (Simulation simulation : simulations) {
-            futures.add(executorService.submit(simulation));
+        for (Thread thread : threads) {
+            thread.start();
         }
-        executorService.shutdown();
     }
 
     public void runAsyncInThreadPool(int threadPoolSize) {
         ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
 
         for (Simulation simulation : simulations) {
-            futures.add(executorService.submit(simulation));
+            executorService.submit(simulation);
         }
-        executorService.shutdown();
     }
 
     public void awaitSimulationsEnd() {
-        try {
-            Instant deadline = Instant.now().plus(10, ChronoUnit.SECONDS);
-            for (Future<?> future : futures) {
-                if (Instant.now().isAfter(deadline)) {
-                    throw new TimeoutException();
-                }
-                future.get(Duration.between(Instant.now(), deadline).toNanos(), TimeUnit.NANOSECONDS);
+        try{
+            for(Thread thread : threads) {
+                thread.join();
             }
-        } catch (TimeoutException ignored) {
-        } catch (Exception e) {
+
+            executorService.shutdown();
+            if(!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
-            for (Future<?> future : futures) {
-                future.cancel(true);
-            }
         }
     }
 }

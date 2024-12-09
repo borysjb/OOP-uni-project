@@ -24,6 +24,10 @@ public class Animal implements WorldElement {
         return this.direction;
     }
 
+    public void setPosition(Vector2d position) {
+        this.position = position;
+    }
+
     @Override
     public String toString() {
         return this.direction.toString();
