@@ -8,7 +8,7 @@ import agh.ics.oop.model.WorldMap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Simulation {
+public class Simulation implements Runnable {
     private final List<MoveDirection> moves;
     private final List<Animal> animals;
     private final WorldMap world;
@@ -37,7 +37,11 @@ public class Simulation {
     }
 
     public void run() {
-        System.out.println("Simulation started");
+        //System.out.println("Simulation started");
+        if (animals.isEmpty()) {
+            System.out.println("No animals found");
+            return;
+        }
         for (int i = 0; i < moves.size(); i++) {
             Animal currentAnimal = animals.get(i % animals.size());
             MoveDirection moveDirection = moves.get(i);

@@ -11,11 +11,19 @@ public class ConsoleMapDisplay implements MapChangeListener{
         updates = 0;
     }
 
+    public int getUpdates() {
+        return updates;
+    }
+
     @Override
     public void mapChanged(WorldMap map, String message) {
-        System.out.println("\nOperation: " + message);
-        System.out.println(map);
-        updates++;
-        System.out.println("Updates up to this moment: " + updates + "\n");
+        synchronized (this) {
+            updates++;
+            System.out.println("\n" +
+                    "Map ID: " + map.getID() + "\n" +
+                    "Operation: " + message + "\n" +
+                    "Current state:\n" + map + "\n" +
+                    "Updates up to this moment: " + updates + "\n");
+        }
     }
 }
