@@ -18,7 +18,6 @@ public class World {
 
             ConsoleMapDisplay display = new ConsoleMapDisplay();
 
-
             List<Simulation> simulations = new ArrayList<>();
             simulations.add(new Simulation(positions, directions, grassMap));
             simulations.add(new Simulation(positions, directions, rectMap));
