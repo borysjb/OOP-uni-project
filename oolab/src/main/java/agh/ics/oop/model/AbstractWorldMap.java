@@ -70,7 +70,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         return this.animalMap.containsKey(position);
     }
 
-    public WorldElement objectAt(Vector2d position) {
+    public Optional<WorldElement> objectAt(Vector2d position) {
         return getElements().get(position);
     }
 
